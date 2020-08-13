@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 <?php
+require('../dbconnect.php');
 session_start();
 
     if(!empty($_POST)) {
@@ -31,6 +24,16 @@ session_start();
           }
       }
 
+      // 重複アカウントのチェック
+      if(empty($error)) {
+          $member = $db->prepare('SELECT COUNT(*) AS cnt FROM members WHERE email=?');
+          $member->execute(array($_POST['email']));
+          $record = $member->fetch();
+          if($record['cnt'] > 0) {
+              $error['email'] = 'duplicate';
+          }
+      }
+
       if(empty($error)) {
           // 画像をアップロードする
           $image = date('YmdHis') . $_FILES['image']['name'];
@@ -42,8 +45,22 @@ session_start();
           exit();
       }
     }
+
+    // 書き直し
+    if($_REQUEST['action'] == 'rewrite') {
+        $_POST = $_SESSION['join'];
+        $error['rewrite'] = true;
+    }
     ?>
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
     <p>次のフォームに必要事項をご記入ください。</p>
     <form action="" method="post" enctype="multipart/form-data">
       <dl>
@@ -58,6 +75,9 @@ session_start();
           value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>" />
           <?php if($error['email'] == 'blank'): ?>
           <p class="error">* メールアドレスを入力してください</p>
+          <?php endif; ?>
+          <?php if($error['email'] == 'duplicate'): ?>
+          <p class="error">* 指定されたメールアドレスはすでに登録されています</p>
           <?php endif; ?>
           <dt>パスワード<span class="required">必須</span></dt> 
           <dd><input type="password" name="password" size="10" maxlength"20"
