@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 <?php
 session_start();
 require('../dbconnect.php');
 
 if(!isset($_SESSION['join'])) {
-    header('Lodation: index.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -30,6 +22,15 @@ if(!empty($_POST)) {
   exit();
 }
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulletin-board</title>
+</head>
+<body>
+<main>
     <p>次のフォームに必要事項をご記入ください。</p>
     <form action="" method="post">
       <input type="hidden" name="action" value="submit" />
@@ -51,5 +52,6 @@ if(!empty($_POST)) {
       </dl>
       <div><a href="index.php?action=rewrite"&nbsp;書き直す</a> | <input type="submit" value="登録する" /></div>
       </form>
+</main>
 </body>
 </html>
