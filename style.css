@@ -1,0 +1,51 @@
+main {
+    background-color: #d9e9ff;
+    width: 960px;
+    margin: 0 auto;
+    padding-left: 2%;
+}
+h1 {
+    font-size: 2rem;
+    font-style: italic;
+}
+a {
+    text-decoration: none;
+}
+.logout {
+    float: right;
+    margin-right: 5%;
+    padding: 2px 5px;
+    border: 1px solid #767676;
+    background-color: #efefef;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    
+}
+.logout a{
+    color: black;
+}
+
+form {
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    border-bottom: 1px solid #a9aeb8;
+}
+form dt {
+    margin-bottom: 2%;
+}
+.msg {
+    margin-bottom: 2%;
+    border-bottom: 1px solid #a9aeb8;
+}
+.paging {
+    list-style: none;
+    text-align: center;
+}
+.paging li {
+    display: inline-block;
+    padding-right: 5%;
+}
+/* login.php　*/
+.error {
+    color: red;
+}

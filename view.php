@@ -2,7 +2,7 @@
 session_start();
 require('dbconnect.php');
 
-if(empty($_REQUEST['id'])) {
+if (empty($_REQUEST['id'])) {
     header('Location: index.php');
     exit();
 }
@@ -13,34 +13,36 @@ $posts->execute(array($_REQUEST['id']));
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bulletin-board</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-<main>
- <h1>Bulletin-board</h1>
- <div id ="content">
- <p>&laquo;<a href="index.php">一覧にもどる</a></p>
- <?php
- if($post = $posts->fetch()):
- ?>
-    <div class="msg">
-    <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>" />
-    <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES); ?><span class="name"> (<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>) </span></p>
-    <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></p>
-    </div>
 
-    <?php
-    else:
-    ?>
-        <p>その投稿は削除されたか、URLが間違えています</p>
-    <?php
-    endif;
-    ?>
- </div>
-</main>
-    
+<body>
+    <main>
+        <h1>Bulletin-board</h1>
+        <div id="content">
+            <p>&laquo;<a href="index.php">一覧にもどる</a></p>
+            <?php
+            if ($post = $posts->fetch()) :
+            ?>
+                <div class="msg">
+                    <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>" />
+                    <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES); ?><span class="name"> (<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>) </span></p>
+                    <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></p>
+                </div>
+
+            <?php
+            else :
+            ?>
+                <p>その投稿は削除されたか、URLが間違えています</p>
+            <?php
+            endif;
+            ?>
+        </div>
+    </main>
 </body>
 </html>
